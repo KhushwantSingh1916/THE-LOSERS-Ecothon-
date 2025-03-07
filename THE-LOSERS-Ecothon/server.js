@@ -1,15 +1,20 @@
+// filepath: c:\Users\khush\OneDrive\ecothon\THE-LOSERS-Ecothon-\THE-LOSERS-Ecothon\server.js
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const path = require('path');
+const dotenv = require('dotenv');
+
+// Load environment variables from .env file
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware for session management
 app.use(session({
-    secret: 'khushwant',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
 }));
@@ -20,9 +25,9 @@ app.use(passport.session());
 
 // Configure Passport to use Google OAuth2
 passport.use(new GoogleStrategy({
-    clientID: '390921447359-b8ol5og3avpp7q0eu1jsomk1acjhi81g.apps.googleusercontent.com',
-    clientSecret: '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',
-    callbackURL: '/auth/google/callback',
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: 'http://localhost:3000/auth/google/callback',
 }, (accessToken, refreshToken, profile, done) => {
     // Save user profile to session
     return done(null, profile);
