@@ -1,16 +1,19 @@
-from flask import Flask, redirect, url_for, session
+from flask import Flask, redirect, url_for, session, request
 from flask_oauthlib.client import OAuth
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # Load environment variables from .env file
 
 app = Flask(__name__)
-app.secret_key = 'random_secret_key'
-app.config['GOOGLE_ID'] = 'your_google_client_id'
-app.config['GOOGLE_SECRET'] = 'your_google_client_secret'
+app.secret_key = os.getenv('SECRET_KEY')
+app.config['SESSION_TYPE'] = 'filesystem'
 
 oauth = OAuth(app)
 google = oauth.remote_app(
     'google',
-    consumer_key=app.config['GOOGLE_ID'],
-    consumer_secret=app.config['GOOGLE_SECRET'],
+    consumer_key=os.getenv('GOOGLE_CLIENT_ID'),
+    consumer_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
     request_token_params={
         'scope': 'email',
     },
@@ -23,8 +26,6 @@ google = oauth.remote_app(
 
 @app.route('/')
 def index():
-    if 'google_token' in session:
-        return redirect(url_for('dashboard'))
     return redirect(url_for('login'))
 
 @app.route('/login')
@@ -44,12 +45,10 @@ def authorized():
             request.args['error_reason'],
             request.args['error_description']
         )
-    session['google_token'] = (response['access_token'], '')
-    return redirect(url_for('dashboard'))
 
-@app.route('/dashboard')
-def dashboard():
-    return render_template('index.html')
+    session['google_token'] = (response['access_token'], '')
+    user_info = google.get('userinfo')
+    return 'Logged in as: ' + user_info.data['email']
 
 @google.tokengetter
 def get_google_oauth_token():
