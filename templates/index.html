@@ -60,6 +60,11 @@
             transform: translateY(-10px);
             box-shadow: 0 7px 14px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);    
   }
+  .truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
   </style>
  </head>
  <body class="bg-green-800 text-white">
@@ -105,17 +110,25 @@
         <!-- Main Content -->
         <div class="flex-1 p-4">
           <!-- Header -->
-          <div class="flex justify-between items-center bg-green-600 p-4 rounded-lg floating-card">
-            <h1 class="text-2xl font-bold">Admin Dashboard</h1>
-            <div class="flex items-center space-x-4">
-              <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="">
-                <i class="fas fa-user text-green-700"></i>
-              </button>
-              <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="">
-                <i class="fas fa-microphone text-green-700"></i>
-              </button>
-            </div>
-          </div>
+          <!-- filepath: c:\Users\khush\OneDrive\ecothon\THE-LOSERS-Ecothon-\templates\index.html -->
+<div class="flex justify-between items-center bg-green-600 p-4 rounded-lg floating-card">
+  <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+  <div class="flex items-center space-x-4">
+    <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="">
+      <i class="fas fa-microphone text-green-700"></i>
+    </button>
+    <div class="relative">
+      <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="toggleDropdown()">
+        <i class="fas fa-user text-green-700"></i>
+      </button>
+      <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden">
+        <p class="px-4 py-2 text-green-700 truncate">{{ user.email }}</p>
+        <div class="border-t border-gray-200"></div>
+        <a href="/logout" class="block px-4 py-2 text-green-700 hover:bg-gray-100">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
           <!-- Content Grid -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
             <!-- Sectorwise Consumption -->
@@ -886,6 +899,23 @@
       // Remove blur from main container
       document.getElementById('pagesContainer').classList.remove('blur-bg');
     }
+    function toggleDropdown() {
+    const dropdown = document.getElementById('userDropdown');
+    dropdown.classList.toggle('hidden');
+  }
+
+  // Close the dropdown if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.fa-user')) {
+      const dropdowns = document.getElementsByClassName('dropdown-content');
+      for (let i = 0; i < dropdowns.length; i++) {
+        const openDropdown = dropdowns[i];
+        if (!openDropdown.classList.contains('hidden')) {
+          openDropdown.classList.add('hidden');
+        }
+      }
+    }
+  }
   </script>
  </body>
 </html>
