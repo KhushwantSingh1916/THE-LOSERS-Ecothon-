@@ -238,92 +238,69 @@
       </div>
     </div>
 
-    <div id="lightbulbPage" class="page bg-green-800">
-      <div class="container mx-auto p-8">
-        <div class="flex justify-between items-center mb-8">
-          <h1 class="text-3xl font-bold">Energy Insights</h1>
-          <button onclick="navigateTo('mainDashboard')" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">
-            <i class="fas fa-arrow-left mr-2"></i>Back to Main Dashboard
-          </button>
-        </div>
-        <div class="bg-green-600 p-6 rounded-lg mb-6 floating-card">
-          <h2 class="text-2xl font-bold mb-4">Energy Saving Tips & Insights</h2>
-          <p>Discover ways to optimize energy usage and reduce consumption across all departments.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-green-700 p-4 rounded-lg floating-card">
-            <h3 class="text-xl font-bold mb-4">Current Recommendations</h3>
-            <ul class="space-y-4">
-              <li class="flex items-start">
-                <i class="fas fa-lightbulb text-yellow-300 mt-1 mr-3"></i>
-                <div>
-                  <h4 class="font-bold">Replace Lighting in Admin Building</h4>
-                  <p>Switching to LED lighting could save up to 15% on lighting energy costs.</p>
-                  <div class="text-sm mt-1">Estimated savings: $2,400/year</div>
-                </div>
-              </li>
-              <li class="flex items-start">
-                <i class="fas fa-thermometer-half text-yellow-300 mt-1 mr-3"></i>
-                <div>
-                  <h4 class="font-bold">Optimize HVAC Schedule</h4>
-                  <p>Current schedule shows heating/cooling during unoccupied hours.</p>
-                  <div class="text-sm mt-1">Estimated savings: $3,800/year</div>
-                </div>
-              </li>
-              <li class="flex items-start">
-                <i class="fas fa-plug text-yellow-300 mt-1 mr-3"></i>
-                <div>
-                  <h4 class="font-bold">Equipment Power Management</h4>
-                  <p>Implement auto-shutdown for lab equipment after hours.</p>
-                  <div class="text-sm mt-1">Estimated savings: $1,950/year</div>
-                </div>
-              </li>
-            </ul>
+<div id="lightbulbPage" class="page bg-green-800">
+  <div class="container mx-auto p-8">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">Energy Insights</h1>
+      <button onclick="navigateTo('mainDashboard')" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">
+        <i class="fas fa-arrow-left mr-2"></i>Back to Main Dashboard
+      </button>
+    </div>
+    <div class="bg-green-600 p-6 rounded-lg mb-6 floating-card">
+      <h2 class="text-2xl font-bold mb-4">Energy Saving Tips & Insights</h2>
+      <p>Discover ways to optimize energy usage and reduce consumption across all departments.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-green-700 p-4 rounded-lg floating-card">
+        <h3 class="text-xl font-bold mb-4">Current Recommendations</h3>
+        <ul class="space-y-4" id="recommendationsList">
+          <!-- Recommendations will be dynamically populated here -->
+        </ul>
+      </div>
+      <div class="bg-green-700 p-4 rounded-lg">
+        <h3 class="text-xl font-bold mb-4">Energy Efficiency Metrics</h3>
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between mb-1">
+              <span>Admin Building</span>
+              <span>72%</span>
+            </div>
+            <div class="w-full bg-green-900 rounded-full h-2.5">
+              <div class="bg-green-300 h-2.5 rounded-full" style="width: 72%"></div>
+            </div>
           </div>
-          <div class="bg-green-700 p-4 rounded-lg">
-            <h3 class="text-xl font-bold mb-4">Energy Efficiency Metrics</h3>
-            <div class="space-y-4">
-              <div>
-                <div class="flex justify-between mb-1">
-                  <span>Admin Building</span>
-                  <span>72%</span>
-                </div>
-                <div class="w-full bg-green-900 rounded-full h-2.5">
-                  <div class="bg-green-300 h-2.5 rounded-full" style="width: 72%"></div>
-                </div>
-              </div>
-              <div>
-                <div class="flex justify-between mb-1">
-                  <span>CSE Department</span>
-                  <span>65%</span>
-                </div>
-                <div class="w-full bg-green-900 rounded-full h-2.5">
-                  <div class="bg-green-300 h-2.5 rounded-full" style="width: 65%"></div>
-                </div>
-              </div>
-              <div>
-                <div class="flex justify-between mb-1">
-                  <span>Production Department</span>
-                  <span>83%</span>
-                </div>
-                <div class="w-full bg-green-900 rounded-full h-2.5">
-                  <div class="bg-green-300 h-2.5 rounded-full" style="width: 83%"></div>
-                </div>
-              </div>
-              <div>
-                <div class="flex justify-between mb-1">
-                  <span>Mechanical Department</span>
-                  <span>59%</span>
-                </div>
-                <div class="w-full bg-green-900 rounded-full h-2.5">
-                  <div class="bg-green-300 h-2.5 rounded-full" style="width: 59%"></div>
-                </div>
-              </div>
+          <div>
+            <div class="flex justify-between mb-1">
+              <span>CSE Department</span>
+              <span>65%</span>
+            </div>
+            <div class="w-full bg-green-900 rounded-full h-2.5">
+              <div class="bg-green-300 h-2.5 rounded-full" style="width: 65%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1">
+              <span>Production Department</span>
+              <span>83%</span>
+            </div>
+            <div class="w-full bg-green-900 rounded-full h-2.5">
+              <div class="bg-green-300 h-2.5 rounded-full" style="width: 83%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1">
+              <span>Mechanical Department</span>
+              <span>59%</span>
+            </div>
+            <div class="w-full bg-green-900 rounded-full h-2.5">
+              <div class="bg-green-300 h-2.5 rounded-full" style="width: 59%"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
     <div id="trophyPage" class="page bg-green-800">
       <div class="container mx-auto p-8">
@@ -855,37 +832,104 @@
     </div>
   </div>
 
-  <script>
-    function navigateTo(pageId) {
-      // Hide all pages
-      document.querySelectorAll('.page').forEach(page => {
-        page.style.display = 'none';
-      });
-      
-      // Show the selected page
-      document.getElementById(pageId).style.display = 'block';
+<script>
+function generateRecommendation(department, percentage) {
+  const recommendations = {
+    'Admin Building': {
+      icon: 'lightbulb',
+      title: 'Replace Lighting',
+      description: 'Switching to LED lighting could save up to 15% on lighting energy costs.',
+      savings: 2400,
+      threshold: 75
+    },
+    'CSE Department': {
+      icon: 'thermometer-half',
+      title: 'Optimize HVAC Schedule',
+      description: 'Current schedule shows heating/cooling during unoccupied hours.',
+      savings: 3800,
+      threshold: 70
+    },
+    'Production Department': {
+      icon: 'plug',
+      title: 'Equipment Power Management',
+      description: 'Implement auto-shutdown for lab equipment after hours.',
+      savings: 1950,
+      threshold: 80
+    },
+    'Mechanical Department': {
+      icon: 'cog',
+      title: 'Upgrade Machinery',
+      description: 'Modernizing equipment can improve energy efficiency significantly.',
+      savings: 4200,
+      threshold: 60
     }
-    
-    function showGraphModal(title, imgSrc, infoText) {
-      // Set modal content
-      document.getElementById('graphTitle').textContent = title;
-      document.getElementById('expandedGraph').src = imgSrc;
-      document.getElementById('graphInfo').innerHTML = infoText;
-      
-      // Add blur to the main container
-      document.getElementById('pagesContainer').classList.add('blur-bg');
-      
-      // Show the modal
-      document.getElementById('graphModal').style.display = 'block';
+  };
+
+  const config = recommendations[department];
+  if (percentage < config.threshold) {
+    return {
+      icon: config.icon,
+      title: `${config.title} in ${department}`,
+      description: config.description,
+      savings: config.savings
+    };
+  }
+  return null;
+}
+
+function generateRecommendations() {
+  const metricElements = document.querySelectorAll('#lightbulbPage .bg-green-700 .space-y-4 > div');
+  const metrics = [];
+  
+  metricElements.forEach(metricElement => {
+    const spans = metricElement.querySelectorAll('div.flex.justify-between.mb-1 span');
+    if (spans.length === 2) {
+      const department = spans[0].textContent.trim();
+      const percentage = parseInt(spans[1].textContent.trim().replace('%', ''), 10);
+      metrics.push({ department, percentage });
     }
-    
-    function closeModal() {
-      // Hide the modal
-      document.getElementById('graphModal').style.display = 'none';
-      
-      // Remove blur from main container
-      document.getElementById('pagesContainer').classList.remove('blur-bg');
+  });
+
+  const recommendationsList = document.getElementById('recommendationsList');
+  recommendationsList.innerHTML = '';
+
+  metrics.forEach(metric => {
+    const recommendation = generateRecommendation(metric.department, metric.percentage);
+    if (recommendation) {
+      const li = document.createElement('li');
+      li.className = 'flex items-start';
+      li.innerHTML = `
+        <i class="fas fa-${recommendation.icon} text-yellow-300 mt-1 mr-3"></i>
+        <div>
+          <h4 class="font-bold">${recommendation.title}</h4>
+          <p>${recommendation.description}</p>
+          <div class="text-sm mt-1">Estimated savings: $${recommendation.savings.toLocaleString()}/year</div>
+        </div>
+      `;
+      recommendationsList.appendChild(li);
     }
-  </script>
+  });
+}
+
+function navigateTo(pageId) {
+  document.querySelectorAll('.page').forEach(page => {
+    page.style.display = 'none';
+  });
+  
+  const page = document.getElementById(pageId);
+  page.style.display = 'block';
+
+  if (pageId === 'lightbulbPage') {
+    generateRecommendations();
+  }
+}
+
+// Initial generation if the page is loaded first
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('lightbulbPage').style.display !== 'none') {
+    generateRecommendations();
+  }
+});
+</script>
  </body>
 </html>
