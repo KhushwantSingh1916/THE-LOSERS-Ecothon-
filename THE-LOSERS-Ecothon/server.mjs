@@ -1,9 +1,11 @@
-const express = require('express');
-const session = require('express-session');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const path = require('path');
-const dotenv = require('dotenv');
+import express from 'express';
+import session from 'express-session';
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import path from 'path';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -41,6 +43,8 @@ passport.deserializeUser((user, done) => {
 });
 
 // Serve static files
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 app.use(express.static(path.join(__dirname, 'src')));
 
 // Routes
