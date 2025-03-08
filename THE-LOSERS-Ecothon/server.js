@@ -1,4 +1,3 @@
-// filepath: c:\Users\khush\OneDrive\ecothon\THE-LOSERS-Ecothon-\THE-LOSERS-Ecothon\server.js
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
