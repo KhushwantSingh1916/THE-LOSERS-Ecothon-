@@ -1,5 +1,5 @@
-from flask import Flask, redirect, url_for, session, request
-from flask_oauthlib.client import OAuth
+from flask import Flask, redirect, url_for, session, request, render_template
+from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 import os
 
@@ -10,44 +10,48 @@ app.secret_key = os.getenv('SECRET_KEY')
 app.config['SESSION_TYPE'] = 'filesystem'
 
 oauth = OAuth(app)
-google = oauth.remote_app(
-    'google',
-    consumer_key=os.getenv('GOOGLE_CLIENT_ID'),
-    consumer_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
-    request_token_params={
-        'scope': 'email',
+google = oauth.register(
+    name='google',
+    client_id=os.getenv('GOOGLE_CLIENT_ID'),
+    client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={
+        'scope': 'openid profile email',
     },
 )
 
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    return render_template('index.html')
 
 @app.route('/login')
 def login():
-    return google.authorize(callback=url_for('authorized', _external=True))
+    return render_template('login.html')
+
+@app.route('/login/google')
+def login_google():
+    redirect_uri = url_for('authorize', _external=True)
+    return google.authorize_redirect(redirect_uri)
 
 @app.route('/logout')
 def logout():
-    session.pop('google_token')
+    session.pop('user')
     return redirect(url_for('index'))
 
 @app.route('/login/authorized')
-def authorized():
-    response = google.authorized_response()
-    if response is None or response.get('access_token') is None:
-        return 'Access denied: reason={} error={}'.format(
-            request.args['error_reason'],
-            request.args['error_description']
-        )
+def authorize():
+    token = google.authorize_access_token()
+    resp = google.get('https://www.googleapis.com/oauth2/v1/userinfo')
+    user_info = resp.json()
+    session['user'] = user_info
+    return redirect(url_for('dashboard'))
 
-    session['google_token'] = (response['access_token'], '')
-    user_info = google.get('userinfo')
-    return 'Logged in as: ' + user_info.data['email']
-
-@google.tokengetter
-def get_google_oauth_token():
-    return session.get('google_token')
+@app.route('/dashboard')
+def dashboard():
+    user = session.get('user')
+    if user:
+        return render_template('index.html', user=user)
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True)
