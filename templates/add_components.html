@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Add Components</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #1f2937; 
+    }
+    .btn-animate {
+      transition: transform 0.2s;
+    }
+    .btn-animate:hover {
+      transform: scale(1.1);
+    }
+    .truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .floating-card {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transition: transform 0.3s ease-in-out;
+    }
+    .floating-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 7px 14px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);    
+    }
+  </style>
+</head>
+<body class="text-white">
+  <div class="container mx-auto p-8">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">Add New Components</h1>
+      <a href="/" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate">
+        <i class="fas fa-arrow-left mr-2"></i>Back to Main Dashboard
+      </a>
+    </div>
+    <div class="bg-gray-700 p-6 rounded-lg mb-6">
+      <h2 class="text-2xl font-bold mb-4">Add New System Components</h2>
+      <p>Extend your energy management system with new components and integrations.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-gray-700 p-4 rounded-lg">
+        <h3 class="text-xl font-bold mb-4">Add Components</h3>
+        <form id="componentsForm">
+          <div id="componentsContainer">
+            <div class="mb-4">
+              <label class="block text-white mb-2">Component Type</label>
+              <select class="w-full p-2 rounded-lg text-black">
+                <option>Fan</option>
+                <option>Light</option>
+                <option>Projector</option>
+                <option>AC</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-white mb-2">Location</label>
+              <select class="w-full p-2 rounded-lg text-black">
+                <option>Admin Building</option>
+                <option>CSE Department</option>
+                <option>Production Department</option>
+                <option>Mechanical Department</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-white mb-2">Description</label>
+              <textarea class="w-full p-2 rounded-lg text-black" rows="3" placeholder="Enter description"></textarea>
+            </div>
+          </div>
+          <button type="button" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate w-full" onclick="addComponent()">Add Another Component</button>
+          <button type="submit" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate w-full mt-4">Submit Components</button>
+        </form>
+      </div>
+      
+      <div class="bg-gray-700 p-4 rounded-lg">
+        <h3 class="text-xl font-bold mb-4">Add Time Table</h3>
+        <form>
+          <div class="mb-4">
+            <label class="block text-white mb-2">Classroom</label>
+            <select class="w-full p-2 rounded-lg text-black">
+              <option>Classroom 101</option>
+              <option>Classroom 102</option>
+              <option>Classroom 103</option>
+              <option>Classroom 104</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-white mb-2">Time Slot</label>
+            <input type="text" class="w-full p-2 rounded-lg text-black" placeholder="Enter time slot (e.g., 9:00 AM - 10:00 AM)">
+          </div>
+          <div class="mb-4">
+            <label class="block text-white mb-2">Class</label>
+            <input type="text" class="w-full p-2 rounded-lg text-black" placeholder="Enter class name">
+          </div>
+          <button type="button" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate w-full">Add Time Table</button>
+        </form>
+      </div>
+      
+      <div class="bg-gray-700 p-4 rounded-lg">
+        <h3 class="text-xl font-bold mb-4">Input Consumption Data</h3>
+        <form>
+          <div class="mb-4">
+            <label class="block text-white mb-2">Department</label>
+            <select class="w-full p-2 rounded-lg text-black">
+              <option>Admin Building</option>
+              <option>CSE Department</option>
+              <option>Production Department</option>
+              <option>Mechanical Department</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-white mb-2">Date</label>
+            <input type="date" class="w-full p-2 rounded-lg text-black">
+          </div>
+          <div class="mb-4">
+            <label class="block text-white mb-2">Energy Consumption (kWh)</label>
+            <input type="number" class="w-full p-2 rounded-lg text-black" placeholder="Enter energy consumption">
+          </div>
+          <button type="button" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate w-full">Input Data</button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="flex justify-between mt-8">
+      <button onclick="predictEnergyConsumption()" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate">Predict</button>
+      <button onclick="getSuggestions()" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate">Suggestions</button>
+    </div>
+    
+    <div id="predictionResults" class="mt-8 bg-gray-700 p-4 rounded-lg hidden">
+      <h3 class="text-xl font-bold mb-4">Prediction Results</h3>
+      <div id="predictionContent" class="text-white"></div>
+    </div>
+    
+    <div id="suggestionResults" class="mt-8 bg-gray-700 p-4 rounded-lg hidden">
+      <h3 class="text-xl font-bold mb-4">Suggestions</h3>
+      <div id="suggestionContent" class="text-white"></div>
+    </div>
+  </div>
+  <script>
+    function addComponent() {
+      const container = document.getElementById('componentsContainer');
+      const componentHTML = `
+        <div class="mb-4">
+          <label class="block text-white mb-2">Component Type</label>
+          <select class="w-full p-2 rounded-lg text-black">
+            <option>Fan</option>
+            <option>Light</option>
+            <option>Projector</option>
+            <option>AC</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-white mb-2">Location</label>
+          <select class="w-full p-2 rounded-lg text-black">
+            <option>Admin Building</option>
+            <option>CSE Department</option>
+            <option>Production Department</option>
+            <option>Mechanical Department</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-white mb-2">Component ID</label>
+          <input type="text" class="w-full p-2 rounded-lg text-black" placeholder="Enter ID">
+        </div>
+        <div class="mb-4">
+          <label class="block text-white mb-2">Description</label>
+          <textarea class="w-full p-2 rounded-lg text-black" rows="3" placeholder="Enter description"></textarea>
+        </div>
+      `;
+      container.insertAdjacentHTML('beforeend', componentHTML);
+    }
+
+    function predictEnergyConsumption() {
+      // Call the AI API to get energy consumption predictions
+      // For demonstration, we'll use a placeholder response
+      const predictionResults = `
+        <p>Classroom 101: 120 kWh</p>
+        <p>Classroom 102: 150 kWh</p>
+        <p>Classroom 103: 130 kWh</p>
+        <p>Classroom 104: 140 kWh</p>
+        <p>Peak Hours: 9:00 AM - 11:00 AM</p>
+        <p>Estimated Monthly Consumption: 4500 kWh</p>
+      `;
+      
+      document.getElementById('predictionContent').innerHTML = predictionResults;
+      document.getElementById('predictionResults').classList.remove('hidden');
+    }
+
+    function getSuggestions() {
+      // Call the AI API to get energy-saving suggestions
+      // For demonstration, we'll use a placeholder response
+      const suggestionResults = `
+        <p>1. Replace old lighting with LED lights to save 15% on energy costs.</p>
+        <p>2. Implement automated shutdown for lab equipment after hours.</p>
+        <p>3. Optimize HVAC schedules to reduce energy consumption during unoccupied hours.</p>
+        <p>4. Encourage students and staff to turn off lights and equipment when not in use.</p>
+      `;
+      
+      document.getElementById('suggestionContent').innerHTML = suggestionResults;
+      document.getElementById('suggestionResults').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

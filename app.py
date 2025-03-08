@@ -22,7 +22,8 @@ google = oauth.register(
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    user = session.get('user')
+    return render_template('index.html', user=user)
 
 @app.route('/login')
 def login():
@@ -52,6 +53,9 @@ def dashboard():
     if user:
         return render_template('index.html', user=user)
     return redirect(url_for('login'))
+@app.route('/add_components')
+def add_components():
+    return render_template('add_components.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
