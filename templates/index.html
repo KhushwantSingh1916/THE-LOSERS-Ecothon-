@@ -1,0 +1,891 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+     font-family: 'Roboto', sans-serif;
+   }
+   .btn-animate {
+     transition: transform 0.2s;
+   }
+   .btn-animate:hover {
+     transform: scale(1.1);
+   }
+   .img-hover:hover {
+     transform: scale(1.05);
+     transition: transform 0.2s;
+     cursor: pointer;
+   }
+   .modal {
+     display: none;
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.7);
+     z-index: 1000;
+   }
+   .modal-content {
+     display: flex;
+     margin: 5% auto;
+     width: 90%;
+     height: 80%;
+     background-color: #047857;
+     border-radius: 10px;
+     overflow: auto;
+   }
+   .blur-bg {
+     filter: blur(5px);
+   }
+   .page {
+     display: none;
+     padding: 20px;
+     height: 100%;
+     width: 100%;
+   }
+   #mainDashboard {
+     display: block;
+   }
+   .floating-card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease-in-out;
+   }
+   .floating-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 7px 14px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);    
+  }
+  </style>
+ </head>
+ <body class="bg-green-800 text-white">
+  <!-- Modal for graph expansion -->
+  <div class="modal" id="graphModal">
+    <div class="modal-content">
+      <div class="flex w-full h-full">
+        <div class="w-1/2 p-4 flex items-center justify-center">
+          <img id="expandedGraph" src="" alt="Expanded graph" class="max-h-full max-w-full rounded-lg">
+        </div>
+        <div class="w-1/2 p-4 bg-green-700 rounded-lg m-4">
+          <h2 id="graphTitle" class="text-2xl font-bold mb-4">Graph Information</h2>
+          <div id="graphInfo" class="text-lg"></div>
+          <button onclick="closeModal()" class="mt-8 bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pages Container -->
+  <div id="pagesContainer">
+    <!-- Main Dashboard Page -->
+    <div id="mainDashboard" class="page">
+      <div class="flex flex-col md:flex-row">
+        <!-- Sidebar -->
+        <div class="bg-green-700 w-full md:w-20 flex md:flex-col items-center py-4 space-y-4 floating-card">
+          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="navigateTo('homePage')">
+            <i class="fas fa-home text-green-700"></i>
+          </button>
+          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="navigateTo('lightbulbPage')">
+            <i class="fas fa-lightbulb text-green-700"></i>
+          </button>
+          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="navigateTo('trophyPage')">
+            <i class="fas fa-trophy text-green-700"></i>
+          </button>
+          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="navigateTo('gamepadPage')">
+            <i class="fas fa-gamepad text-green-700"></i>
+          </button>
+          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="navigateTo('plusPage')">
+            <i class="fas fa-plus text-green-700"></i>
+          </button>
+        </div>
+        <!-- Main Content -->
+        <div class="flex-1 p-4">
+          <!-- Header -->
+          <div class="flex justify-between items-center bg-green-600 p-4 rounded-lg floating-card">
+            <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+            <div class="flex items-center space-x-4">
+              <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="">
+                <i class="fas fa-user text-green-700"></i>
+              </button>
+              <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="">
+                <i class="fas fa-microphone text-green-700"></i>
+              </button>
+            </div>
+          </div>
+          <!-- Content Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            <!-- Sectorwise Consumption -->
+            <div class="bg-green-600 p-4 rounded-lg floating-card">
+              <h2 class="text-xl font-bold mb-4 text-center">Sectorwise Consumption</h2>
+              <input class="w-full p-2 mb-4 rounded-lg text-black" placeholder="search" type="text"/>
+              <div class="space-y-2">
+                <button class="w-full bg-gray-200 text-black p-2 rounded-lg btn-animate" onclick="navigateTo('adminPage')">
+                  Admin
+                </button>
+                <button class="w-full bg-gray-200 text-black p-2 rounded-lg btn-animate" onclick="navigateTo('csePage')">
+                  CSE Department
+                </button>
+                <button class="w-full bg-gray-200 text-black p-2 rounded-lg btn-animate" onclick="navigateTo('productionPage')">
+                  Production Department
+                </button>
+                <button class="w-full bg-gray-200 text-black p-2 rounded-lg btn-animate" onclick="navigateTo('mechanicalPage')">
+                  Mechanical Department
+                </button>
+              </div>
+            </div>
+            <!-- Reports -->
+            <div class="bg-green-600 p-4 rounded-lg col-span-1 md:col-span-2 floating-card">
+              <h2 class="text-xl font-bold mb-4 text-center">Reports</h2>
+              <div class="flex flex-col md:flex-row justify-around space-y-4 md:space-y-0">
+                <div class="bg-green-700 p-4 rounded-lg flex-1 mx-2 floating-card">
+                  <h3 class="text-lg font-bold mb-2 text-center">Annual</h3>
+                  <img alt="Annual report chart" class="rounded-lg img-hover mx-auto" height="100" src="https://storage.googleapis.com/a1aa/image/HdbJ4jpDJNPg2ijnU_581dT-EWyqz4QS4ihqGJRSOsw.jpg" width="100" onclick="showGraphModal('Annual Report', 'https://storage.googleapis.com/a1aa/image/HdbJ4jpDJNPg2ijnU_581dT-EWyqz4QS4ihqGJRSOsw.jpg', 'The annual report shows the consumption patterns over the last year. Key observations include:<br><br>- 15% decrease in overall energy consumption<br>- Peak usage in summer months (May-August)<br>- Weekends show 40% less consumption than weekdays<br>- Estimated annual savings: $12,500')"/>
+                </div>
+                <div class="bg-green-700 p-4 rounded-lg flex-1 mx-2 floating-card">
+                  <h3 class="text-lg font-bold mb-2 text-center">Monthly</h3>
+                  <img alt="Monthly report chart" class="rounded-lg img-hover mx-auto" height="100" src="https://storage.googleapis.com/a1aa/image/7_7HD1ErcLVSa__ru_K-HeGqNZMhfWem0GQinfip8tQ.jpg" width="100" onclick="showGraphModal('Monthly Report', 'https://storage.googleapis.com/a1aa/image/7_7HD1ErcLVSa__ru_K-HeGqNZMhfWem0GQinfip8tQ.jpg', 'The monthly report breaks down consumption patterns for the current month. Key highlights:<br><br>- Daily average consumption: 245 kWh<br>- Peak hours: 9-11 AM and 2-4 PM<br>- Weekend reduction: 37% compared to weekdays<br>- Most efficient day: Wednesday (12% below average)')"/>
+                </div>
+                <div class="bg-green-700 p-4 rounded-lg flex-1 mx-2 floating-card">
+                  <h3 class="text-lg font-bold mb-2 text-center">Weekly</h3>
+                  <img alt="Weekly report chart" class="rounded-lg img-hover mx-auto" height="100" src="https://storage.googleapis.com/a1aa/image/SdZR7hu58FDkX50kXjnMUyLRP0B6X_6aBeAD7VgJSI4.jpg" width="100" onclick="showGraphModal('Weekly Report', 'https://storage.googleapis.com/a1aa/image/SdZR7hu58FDkX50kXjnMUyLRP0B6X_6aBeAD7VgJSI4.jpg', 'The weekly report shows day-by-day consumption patterns. Key findings:<br><br>- Highest consumption day: Monday (285 kWh)<br>- Lowest consumption day: Saturday (175 kWh)<br>- Average daily consumption: 240 kWh<br>- Automated systems saved approximately 320 kWh this week')"/>
+                </div>
+              </div>
+            </div>
+            <!-- Power Saved -->
+            <div class="bg-green-600 p-4 rounded-lg floating-card">
+              <h2 class="text-xl font-bold mb-4 text-center">Power Saved</h2>
+              <div class="flex justify-center">
+                <img alt="Power saved chart" class="rounded-lg img-hover" height="150" src="https://storage.googleapis.com/a1aa/image/URGdlP7uP-1lhITHHtFKicNImLw7p_krvRHwsU8wsp4.jpg" width="200" onclick="showGraphModal('Power Saved Analysis', 'https://storage.googleapis.com/a1aa/image/URGdlP7uP-1lhITHHtFKicNImLw7p_krvRHwsU8wsp4.jpg', 'Power savings analysis shows impressive results from our efficiency initiatives:<br><br>- Total power saved this year: 42,500 kWh<br>- Equivalent to $5,100 in cost reduction<br>- Carbon footprint reduction: 30 metric tons<br>- Automated lighting controls contributed to 35% of total savings<br>- HVAC optimization responsible for 45% of savings<br>- Equipment upgrades account for 20% of savings')"/>
+              </div>
+            </div>
+            <!-- Total Consumption -->
+            <div class="bg-green-600 p-4 rounded-lg floating-card">
+              <h2 class="text-xl font-bold mb-4 text-center">Total Consumption</h2>
+              <div class="flex justify-center">
+                <img alt="Total consumption chart" class="rounded-lg img-hover" height="150" src="https://storage.googleapis.com/a1aa/image/DVEX-My6UzCxFXYfW6bE4YQwOT0GxELlw9suXlbp2yo.jpg" width="200" onclick="showGraphModal('Total Consumption Overview', 'https://storage.googleapis.com/a1aa/image/DVEX-My6UzCxFXYfW6bE4YQwOT0GxELlw9suXlbp2yo.jpg', 'Total consumption overview provides insights into energy usage patterns:<br><br>- Year-to-date consumption: 145,750 kWh<br>- Average monthly consumption: 12,145 kWh<br>- Projected annual consumption: 174,900 kWh<br>- 8.5% reduction compared to previous year<br>- Peak consumption period: Mid-July through August<br>- Lowest consumption period: December through February')"/>
+              </div>
+            </div>
+            <!-- Event Consumption -->
+            <div class="bg-green-600 p-4 rounded-lg floating-card">
+              <h2 class="text-xl font-bold mb-4 text-center">Event Consumption</h2>
+              <div class="flex justify-center">
+                <img alt="Event consumption chart" class="rounded-lg img-hover" height="150" src="https://storage.googleapis.com/a1aa/image/cM7O8-bmbtgIhhv-oy0XYvLC-AF72DQ1tXP6zxoLUmY.jpg" width="200" onclick="showGraphModal('Event Energy Consumption', 'https://storage.googleapis.com/a1aa/image/cM7O8-bmbtgIhhv-oy0XYvLC-AF72DQ1tXP6zxoLUmY.jpg', 'Event energy consumption tracks usage during special campus events:<br><br>- Average event consumption: 320 kWh per event<br>- Highest consumption event: Annual Tech Fair (780 kWh)<br>- Lowest consumption event: Environmental Summit (210 kWh)<br>- Implementation of energy-efficient event guidelines resulted in 22% reduction compared to previous year<br>- Evening events consume 35% more energy than daytime events')"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other Pages -->
+    <div id="homePage" class="page bg-green-800">
+      <div class="container mx-auto p-8">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold">Home Dashboard</h1>
+          <button onclick="navigateTo('mainDashboard')" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Main Dashboard
+          </button>
+        </div>
+        <div class="bg-green-600 p-6 rounded-lg floating-card">
+          <h2 class="text-2xl font-bold mb-4">Welcome to Energy Management System</h2>
+          <p class="mb-4">This dashboard provides comprehensive tools to monitor and control energy consumption across your facilities.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div class="bg-green-700 p-4 rounded-lg floating-card">
+              <h3 class="text-xl font-bold mb-2">Quick Access</h3>
+              <ul class="space-y-2">
+                <li><a href="#" class="text-white hover:underline">⚡ Energy Overview</a></li>
+                <li><a href="#" class="text-white hover:underline">📊 Analytics Dashboard</a></li>
+                <li><a href="#" class="text-white hover:underline">⚙️ System Settings</a></li>
+                <li><a href="#" class="text-white hover:underline">📋 Reports Generator</a></li>
+              </ul>
+            </div>
+            <div class="bg-green-700 p-4 rounded-lg floating-card">
+              <h3 class="text-xl font-bold mb-2">System Status</h3>
+              <div class="space-y-2">
+                <div class="flex justify-between">
+                  <span>System Health:</span>
+                  <span class="font-bold text-green-300">Excellent</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Sensors Online:</span>
+                  <span class="font-bold">45/48</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Last Backup:</span>
+                  <span class="font-bold">Today, 05:30 AM</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Software Version:</span>
+                  <span class="font-bold">v2.3.7</span>
+                </div>
+              </div>
+            </div>
+            <div class="bg-green-700 p-4 rounded-lg floating-card">
+              <h3 class="text-xl font-bold mb-2">Recent Alerts</h3>
+              <ul class="space-y-2">
+                <li class="flex items-center"><span class="text-yellow-300 mr-2">⚠️</span> High usage detected in CSE Lab 4</li>
+                <li class="flex items-center"><span class="text-green-300 mr-2">✓</span> Scheduled maintenance completed</li>
+                <li class="flex items-center"><span class="text-red-500 mr-2">❗</span> Sensor offline in Mechanical Wing</li>
+                <li class="flex items-center"><span class="text-green-300 mr-2">✓</span> Weekly report generated</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="lightbulbPage" class="page bg-green-800">
+      <div class="container mx-auto p-8">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold">Energy Insights</h1>
+          <button onclick="navigateTo('mainDashboard')" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Main Dashboard
+          </button>
+        </div>
+        <div class="bg-green-600 p-6 rounded-lg mb-6 floating-card">
+          <h2 class="text-2xl font-bold mb-4">Energy Saving Tips & Insights</h2>
+          <p>Discover ways to optimize energy usage and reduce consumption across all departments.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-green-700 p-4 rounded-lg floating-card">
+            <h3 class="text-xl font-bold mb-4">Current Recommendations</h3>
+            <ul class="space-y-4">
+              <li class="flex items-start">
+                <i class="fas fa-lightbulb text-yellow-300 mt-1 mr-3"></i>
+                <div>
+                  <h4 class="font-bold">Replace Lighting in Admin Building</h4>
+                  <p>Switching to LED lighting could save up to 15% on lighting energy costs.</p>
+                  <div class="text-sm mt-1">Estimated savings: $2,400/year</div>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-thermometer-half text-yellow-300 mt-1 mr-3"></i>
+                <div>
+                  <h4 class="font-bold">Optimize HVAC Schedule</h4>
+                  <p>Current schedule shows heating/cooling during unoccupied hours.</p>
+                  <div class="text-sm mt-1">Estimated savings: $3,800/year</div>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-plug text-yellow-300 mt-1 mr-3"></i>
+                <div>
+                  <h4 class="font-bold">Equipment Power Management</h4>
+                  <p>Implement auto-shutdown for lab equipment after hours.</p>
+                  <div class="text-sm mt-1">Estimated savings: $1,950/year</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="bg-green-700 p-4 rounded-lg">
+            <h3 class="text-xl font-bold mb-4">Energy Efficiency Metrics</h3>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span>Admin Building</span>
+                  <span>72%</span>
+                </div>
+                <div class="w-full bg-green-900 rounded-full h-2.5">
+                  <div class="bg-green-300 h-2.5 rounded-full" style="width: 72%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span>CSE Department</span>
+                  <span>65%</span>
+                </div>
+                <div class="w-full bg-green-900 rounded-full h-2.5">
+                  <div class="bg-green-300 h-2.5 rounded-full" style="width: 65%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span>Production Department</span>
+                  <span>83%</span>
+                </div>
+                <div class="w-full bg-green-900 rounded-full h-2.5">
+                  <div class="bg-green-300 h-2.5 rounded-full" style="width: 83%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span>Mechanical Department</span>
+                  <span>59%</span>
+                </div>
+                <div class="w-full bg-green-900 rounded-full h-2.5">
+                  <div class="bg-green-300 h-2.5 rounded-full" style="width: 59%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="trophyPage" class="page bg-green-800">
+      <div class="container mx-auto p-8">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold">Achievement Center</h1>
+          <button onclick="navigateTo('mainDashboard')" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Main Dashboard
+          </button>
+        </div>
+        <div class="bg-green-600 p-6 rounded-lg mb-6">
+          <h2 class="text-2xl font-bold mb-4">Energy Conservation Achievements</h2>
+          <p>Tracking departmental and organizational successes in energy management.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div class="bg-green-700 p-4 rounded-lg text-center">
+            <i class="fas fa-medal text-yellow-300 text-5xl mb-4"></i>
+            <h3 class="text-xl font-bold">Top Performer</h3>
+            <p class="text-2xl font-bold mt-2">Production Dept.</p>
+            <p class="mt-1">Reduced consumption by 18%</p>
+          </div>
+          <div class="bg-green-700 p-4 rounded-lg text-center">
+            <i class="fas fa-trophy text-yellow-300 text-5xl mb-4"></i>
+            <h3 class="text-xl font-bold">Most Improved</h3>
+            <p class="text-2xl font-bold mt-2">CSE Department</p>
+            <p class="mt-1">23% improvement from last quarter</p>
+          </div>
+          <div class="bg-green-700 p-4 rounded-lg text-center">
+            <i class="fas fa-award text-yellow-300 text-5xl mb-4"></i>
+            <h3 class="text-xl font-bold">Innovation Award</h3>
+            <p class="text-2xl font-bold mt-2">Mechanical Dept.</p>
+            <p class="mt-1">Smart equipment monitoring system</p>
+          </div>
+        </div>
+        <div class="bg-green-600 p-6 rounded-lg">
+          <h3 class="text-xl font-bold mb-4">Achievement Timeline</h3>
+          <div class="relative">
+            <!-- Timeline line -->
+            <div class="absolute h-full w-0.5 bg-green-300 left-0 ml-3"></div>
+            
+            <!-- Timeline items -->
+            <div class="ml-10 mb-6 relative">
+              <div class="absolute -left-10 mt-1.5">
+                <div class="bg-yellow-300 rounded-full w-6 h-6 flex items-center justify-center">
+                  <i class="fas fa-star text-green-800 text-xs"></i>
+                </div>
+              </div>
+              <div class="bg-green-700 p-3 rounded-lg">
+                <h4 class="font-bold">March 2025</h4>
+                <p>Achieved ISO 50001 Energy Management Certification</p>
+              </div>
+            </div>
+            
+            <div class="ml-10 mb-6 relative">
+              <div class="absolute -left-10 mt-1.5">
+                <div class="bg-yellow-300 rounded-full w-6 h-6 flex items-center justify-center">
+                  <i class="fas fa-star text-green-800 text-xs"></i>
+                </div>
+              </div>
+              <div class="bg-green-700 p-3 rounded-lg">
+                <h4 class="font-bold">January 2025</h4>
+                <p>Completed campus-wide LED lighting upgrade</p>
+              </div>
+            </div>
+            
+            <div class="ml-10 mb-6 relative">
+              <div class="absolute -left-10 mt-1.5">
+                <div class="bg-yellow-300 rounded-full w-6 h-6 flex items-center justify-center">
+                  <i class="fas fa-star text-green-800 text-xs"></i>
+                </div>
+              </div>
+              <div class="bg-green-700 p-3 rounded-lg">
+                <h4 class="font-bold">November 2024</h4>
+                <p>Recognized with Regional Green Campus Award</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="gamepadPage" class="page bg-green-800">
+      <div class="container mx-auto p-8">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold">Energy Controls</h1>
+          <button onclick="navigateTo('mainDashboard')" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Main Dashboard
+          </button>
+        </div>
+        <div class="bg-green-600 p-6 rounded-lg mb-6">
+          <h2 class="text-2xl font-bold mb-4">System Controls</h2>
+          <p>Manage energy systems and control consumption across all departments.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-green-700 p-4 rounded-lg">
+            <h3 class="text-xl font-bold mb-4">Building Controls</h3>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h4 class="font-bold">Admin Building HVAC</h4>
+                  <p class="text-sm">Current: 72°F</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" value="" class="sr-only peer" checked>
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-300"></div>
+                </label>
+              </div>
+              
+              <div class="flex justify-between items-center">
+                <div>
+                  <h4 class="font-bold">CSE Building Lighting</h4>
+                  <p class="text-sm">Current: 80% brightness</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" value="" class="sr-only peer" checked>
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-300"></div>
+                </label>
+              </div>
+              
+              <div class="flex justify-between items-center">
+                <div>
+                  <h4 class="font-bold">Production Equipment</h4>
+                  <p class="text-sm">Status: Low power mode</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" value="" class="sr-only peer" checked>
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-300"></div>
+                </label>
+              </div>
+              
+              <div class="flex justify-between items-center">
+                <div>
+                  <h4 class="font-bold">Mechanical Lab Power</h4>
+                  <p class="text-sm">Status: Standby</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" value="" class="sr-only peer">
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-300"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-green-700 p-4 rounded-lg">
+            <h3 class="text-xl font-bold mb-4">Schedule Controls</h3>
+            <div class="space-y-4">
+              <div class="flex items-center space-x-4">
+                <div class="flex-grow">
+                  <h4 class="font-bold">Automatic Night Shutdown</h4>
+                  <p class="text-sm">Occurs at 10:00 PM daily</p>
+                </div>
+                <button class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">Edit</button>
+              </div>
+              
+              <div class="flex items-center space-x-4">
+                <div class="flex-grow">
+                  <h4 class="font-bold">Weekend Power Conservation</h4>
+                  <p class="text-sm">Activates Friday 8:00 PM</p>
+                </div>
+                <button class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">Edit</button>
+              </div>
+              
+              <div class="flex items-center space-x-4">
+                <div class="flex-grow">
+                  <h4 class="font-bold">Morning Warm-up</h4>
+                  <p class="text-sm">Starts at 6:30 AM weekdays</p>
+                </div>
+                <button class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">Edit</button>
+              </div>
+              
+              <div class="flex items-center space-x-4">
+                <div class="flex-grow">
+                  <h4 class="font-bold">Load Balancing</h4>
+                  <p class="text-sm">Dynamic, based on grid demand</p>
+                </div>
+                <button class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="plusPage" class="page bg-green-800">
+      <div class="container mx-auto p-8">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold">Add New Components</h1>
+          <button onclick="navigateTo('mainDashboard')" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Main Dashboard
+          </button>
+        </div>
+        <div class="bg-green-600 p-6 rounded-lg mb-6">
+          <h2 class="text-2xl font-bold mb-4">Add New System Components</h2>
+          <p>Extend your energy management system with new components and integrations.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-green-700 p-4 rounded-lg">
+            <h3 class="text-xl font-bold mb-4">Add New Equipment</h3>
+            <form>
+              <div class="mb-4">
+                <label class="block text-white mb-2">Equipment Type</label>
+                <select class="w-full p-2 rounded-lg text-black">
+                  <option>Sensor</option>
+                  <option>Controller</option>
+                  <option>Monitor</option>
+                  <option>Smart Switch</option>
+                  <option>Energy Meter</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label class="block text-white mb-2">Location</label>
+                <select class="w-full p-2 rounded-lg text-black">
+                  <option>Admin Building</option>
+                  <option>CSE Department</option>
+                  <option>Production Department</option>
+                  <option>Mechanical Department</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label class="block text-white mb-2">Equipment ID</label>
+                <input type="text" class="w-full p-2 rounded-lg text-black" placeholder="Enter ID">
+              </div>
+              <div class="mb-4">
+                <label class="block text-white mb-2">Description</label>
+                <textarea class="w-full p-2 rounded-lg text-black" rows="3" placeholder="Enter description"></textarea>
+              </div>
+              <button type="button" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate w-full">Add Equipment</button>
+            </form>
+          </div>
+          
+          <div class="bg-green-700 p-4 rounded-lg">
+            <h3 class="text-xl font-bold mb-4">Add New Report Type</h3>
+            <form>
+              <div class="mb-4">
+                <label class="block text-white mb-2">Report Name</label>
+                <input type="text" class="w-full p-2 rounded-lg text-black" placeholder="Enter report name">
+              </div>
+              <div class="mb-4">
+                <label class="block text-white mb-2">Report Type</label>
+                <select class="w-full p-2 rounded-lg text-black">
+                  <option>Consumption Analysis</option>
+                  <option>Cost Analysis</option>
+                  <option>Efficiency Report</option>
+                  <option>Comparative Report</option>
+                  <option>Custom Report</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label class="block text-white mb-2">Time Interval</label>
+                <select class="w-full p-2 rounded-lg text-black">
+                  <option>Daily</option>
+                  <option>Weekly</option>
+                  <option>Monthly</option>
+                  <option>Quarterly</option>
+                  <option>Annual</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label class="block text-white mb-2">Included Metrics</label>
+                <div class="space-y-2">
+                  <div class="flex items-center">
+                    <input type="checkbox" id="kwh" class="mr-2" checked>
+                    <label for="kwh">kWh Consumption</label>
+                  </div>
+                  <div class="flex items-center">
+                    <input type="checkbox" id="cost" class="mr-2" checked>
+                    <label for="cost">Cost Analysis</label>
+                  </div>
+                  <div class="flex items-center">
+                    <input type="checkbox" id="peak" class="mr-2">
+                    <label for="peak">Peak Usage</label>
+                  </div>
+                  <div class="flex items-center">
+                    <input type="checkbox" id="carbon" class="mr-2">
+                    <label for="carbon">Carbon Footprint</label>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate w-full">Add Report Type</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Department Pages -->
+    <div id="adminPage" class="page bg-green-800">
+      <div class="container mx-auto p-8">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold">Admin Department Energy Usage</h1>
+          <button onclick="navigateTo('mainDashboard')" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Main Dashboard
+          </button>
+        </div>
+        <div class="bg-green-600 p-6 rounded-lg">
+          <h2 class="text-2xl font-bold mb-4">Admin Building Consumption Details</h2>
+          <p class="mb-6">Monitoring energy usage across administrative facilities.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <img alt="Admin usage chart" class="rounded-lg img-hover" src="https://storage.googleapis.com/a1aa/image/HdbJ4jpDJNPg2ijnU_581dT-EWyqz4QS4ihqGJRSOsw.jpg" class="w-full rounded-lg" onclick="showGraphModal('Admin Building Usage', 'https://storage.googleapis.com/a1aa/image/HdbJ4jpDJNPg2ijnU_581dT-EWyqz4QS4ihqGJRSOsw.jpg', 'The Admin Building has shown consistent improvement in energy efficiency. Highlights:<br><br>- 12% reduction in overall consumption compared to previous year<br>- Peak usage hours: 9AM-4PM weekdays<br>- HVAC accounts for 45% of total consumption<br>- Lighting accounts for 30% of consumption<br>- Office equipment accounts for 25% of consumption<br>- Weekend power conservation program has been highly effective')"/>
+            </div>
+            <div class="space-y-4">
+              <div class="bg-green-700 p-4 rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Key Stats</h3>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <p class="text-sm">Monthly Average</p>
+                    <p class="text-2xl font-bold">4,250 kWh</p>
+                  </div>
+                  <div>
+                    <p class="text-sm">YTD Consumption</p>
+                    <p class="text-2xl font-bold">12,750 kWh</p>
+                  </div>
+                  <div>
+                    <p class="text-sm">Peak Day</p>
+                    <p class="text-2xl font-bold">Monday</p>
+                  </div>
+                  <div>
+                    <p class="text-sm">Cost per Month</p>
+                    <p class="text-2xl font-bold">$510</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-green-700 p-4 rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Efficiency Rating</h3>
+                <div class="flex items-center">
+                  <div class="text-4xl font-bold mr-4">72%</div>
+                  <div class="flex-grow">
+                    <div class="w-full bg-green-900 rounded-full h-4">
+                      <div class="bg-green-300 h-4 rounded-full" style="width: 72%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm mt-1">
+                      <span>0%</span>
+                      <span>50%</span>
+                      <span>100%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="csePage" class="page bg-green-800">
+      <!-- Similar structure to adminPage but for CSE Department -->
+      <div class="container mx-auto p-8">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold">CSE Department Energy Usage</h1>
+          <button onclick="navigateTo('mainDashboard')" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Main Dashboard
+          </button>
+        </div>
+        <div class="bg-green-600 p-6 rounded-lg">
+          <h2 class="text-2xl font-bold mb-4">Computer Science & Engineering Consumption Details</h2>
+          <p class="mb-6">Tracking energy usage across all CSE labs and classrooms.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <img alt="CSE usage chart" class="rounded-lg img-hover" src="https://storage.googleapis.com/a1aa/image/7_7HD1ErcLVSa__ru_K-HeGqNZMhfWem0GQinfip8tQ.jpg" class="w-full rounded-lg" onclick="showGraphModal('CSE Department Usage', 'https://storage.googleapis.com/a1aa/image/7_7HD1ErcLVSa__ru_K-HeGqNZMhfWem0GQinfip8tQ.jpg', 'The CSE Department has implemented several energy-saving initiatives with great success. Key points:<br><br>- Computer labs account for 60% of total energy consumption<br>- Server room optimization resulted in 18% energy reduction<br>- Automated computer shutdown saved approximately 320 kWh monthly<br>- LED lighting upgrades completed in all classrooms<br>- Peak usage correlates with class schedules and lab assignments')"/>
+            </div>
+            <div class="space-y-4">
+              <div class="bg-green-700 p-4 rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Key Stats</h3>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <p class="text-sm">Monthly Average</p>
+                    <p class="text-2xl font-bold">6,120 kWh</p>
+                  </div>
+                  <div>
+                    <p class="text-sm">YTD Consumption</p>
+                    <p class="text-2xl font-bold">18,360 kWh</p>
+                  </div>
+                  <div>
+                    <p class="text-sm">Peak Day</p>
+                    <p class="text-2xl font-bold">Wednesday</p>
+                  </div>
+                  <div>
+                    <p class="text-sm">Cost per Month</p>
+                    <p class="text-2xl font-bold">$734</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-green-700 p-4 rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Efficiency Rating</h3>
+                <div class="flex items-center">
+                  <div class="text-4xl font-bold mr-4">65%</div>
+                  <div class="flex-grow">
+                    <div class="w-full bg-green-900 rounded-full h-4">
+                      <div class="bg-green-300 h-4 rounded-full" style="width: 65%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm mt-1">
+                      <span>0%</span>
+                      <span>50%</span>
+                      <span>100%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="productionPage" class="page bg-green-800">
+      <!-- Similar structure to adminPage but for Production Department -->
+      <div class="container mx-auto p-8">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold">Production Department Energy Usage</h1>
+          <button onclick="navigateTo('mainDashboard')" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Main Dashboard
+          </button>
+        </div>
+        <div class="bg-green-600 p-6 rounded-lg">
+          <h2 class="text-2xl font-bold mb-4">Production Department Consumption Details</h2>
+          <p class="mb-6">Monitoring energy usage across production facilities and equipment.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <img alt="Production usage chart" class="rounded-lg img-hover" src="https://storage.googleapis.com/a1aa/image/DVEX-My6UzCxFXYfW6bE4YQwOT0GxELlw9suXlbp2yo.jpg" class="w-full rounded-lg" onclick="showGraphModal('Production Department Usage', 'https://storage.googleapis.com/a1aa/image/DVEX-My6UzCxFXYfW6bE4YQwOT0GxELlw9suXlbp2yo.jpg', 'The Production Department has achieved the highest efficiency rating campus-wide. Notable achievements:<br><br>- Equipment upgrades reduced power consumption by 23%<br>- Variable frequency drives installed on all major motors<br>- Smart scheduling reduced idle time by 45%<br>- Process optimization reduced cycle times and energy use<br>- New energy recovery system captures waste heat')"/>
+            </div>
+            <div class="space-y-4">
+              <div class="bg-green-700 p-4 rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Key Stats</h3>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <p class="text-sm">Monthly Average</p>
+                    <p class="text-2xl font-bold">8,750 kWh</p>
+                  </div>
+                  <div>
+                    <p class="text-sm">YTD Consumption</p>
+                    <p class="text-2xl font-bold">26,250 kWh</p>
+                  </div>
+                  <div>
+                    <p class="text-sm">Peak Day</p>
+                    <p class="text-2xl font-bold">Tuesday</p>
+                  </div>
+                  <div>
+                    <p class="text-sm">Cost per Month</p>
+                    <p class="text-2xl font-bold">$1,050</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-green-700 p-4 rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Efficiency Rating</h3>
+                <div class="flex items-center">
+                  <div class="text-4xl font-bold mr-4">83%</div>
+                  <div class="flex-grow">
+                    <div class="w-full bg-green-900 rounded-full h-4">
+                      <div class="bg-green-300 h-4 rounded-full" style="width: 83%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm mt-1">
+                      <span>0%</span>
+                      <span>50%</span>
+                      <span>100%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="mechanicalPage" class="page bg-green-800">
+      <!-- Similar structure to adminPage but for Mechanical Department -->
+      <div class="container mx-auto p-8">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold">Mechanical Department Energy Usage</h1>
+          <button onclick="navigateTo('mainDashboard')" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Main Dashboard
+          </button>
+        </div>
+        <div class="bg-green-600 p-6 rounded-lg">
+          <h2 class="text-2xl font-bold mb-4">Mechanical Department Consumption Details</h2>
+          <p class="mb-6">Tracking energy usage across mechanical engineering labs and workshops.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <img alt="Mechanical usage chart" class="rounded-lg img-hover" src="https://storage.googleapis.com/a1aa/image/cM7O8-bmbtgIhhv-oy0XYvLC-AF72DQ1tXP6zxoLUmY.jpg" class="w-full rounded-lg" onclick="showGraphModal('Mechanical Department Usage', 'https://storage.googleapis.com/a1aa/image/cM7O8-bmbtgIhhv-oy0XYvLC-AF72DQ1tXP6zxoLUmY.jpg', 'The Mechanical Department has been implementing gradual improvements. Key insights:<br><br>- Heavy equipment accounts for 70% of energy consumption<br>- New automated equipment shutdown procedures implemented<br>- Recent HVAC optimization in progress<br>- Workshop scheduling revised to reduce peak demand<br>- Major equipment replacement planned for next quarter')"/>
+            </div>
+            <div class="space-y-4">
+              <div class="bg-green-700 p-4 rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Key Stats</h3>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <p class="text-sm">Monthly Average</p>
+                    <p class="text-2xl font-bold">7,450 kWh</p>
+                  </div>
+                  <div>
+                    <p class="text-sm">YTD Consumption</p>
+                    <p class="text-2xl font-bold">22,350 kWh</p>
+                  </div>
+                  <div>
+                    <p class="text-sm">Peak Day</p>
+                    <p class="text-2xl font-bold">Thursday</p>
+                  </div>
+                  <div>
+                    <p class="text-sm">Cost per Month</p>
+                    <p class="text-2xl font-bold">$894</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-green-700 p-4 rounded-lg">
+                <h3 class="text-xl font-bold mb-2">Efficiency Rating</h3>
+                <div class="flex items-center">
+                  <div class="text-4xl font-bold mr-4">59%</div>
+                  <div class="flex-grow">
+                    <div class="w-full bg-green-900 rounded-full h-4">
+                      <div class="bg-green-300 h-4 rounded-full" style="width: 59%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm mt-1">
+                      <span>0%</span>
+                      <span>50%</span>
+                      <span>100%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function navigateTo(pageId) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(page => {
+        page.style.display = 'none';
+      });
+      
+      // Show the selected page
+      document.getElementById(pageId).style.display = 'block';
+    }
+    
+    function showGraphModal(title, imgSrc, infoText) {
+      // Set modal content
+      document.getElementById('graphTitle').textContent = title;
+      document.getElementById('expandedGraph').src = imgSrc;
+      document.getElementById('graphInfo').innerHTML = infoText;
+      
+      // Add blur to the main container
+      document.getElementById('pagesContainer').classList.add('blur-bg');
+      
+      // Show the modal
+      document.getElementById('graphModal').style.display = 'block';
+    }
+    
+    function closeModal() {
+      // Hide the modal
+      document.getElementById('graphModal').style.display = 'none';
+      
+      // Remove blur from main container
+      document.getElementById('pagesContainer').classList.remove('blur-bg');
+    }
+  </script>
+ </body>
+</html>
