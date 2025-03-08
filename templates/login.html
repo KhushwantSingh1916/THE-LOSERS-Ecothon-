@@ -31,10 +31,11 @@
       top: -50px;
       width: 30px;
       height: 30px;
-      background-image: url('leaf.svg');
+      background-image: url('{{ url_for('static', filename='leaf.svg') }}');
       background-size: cover;
       transform-origin: bottom center;
-      animation: fall linear infinite;
+      animation: fall linear infinite; 
+    }
     .leaf:nth-child(1) {
       left: 5%;
       animation-duration: 5s;
