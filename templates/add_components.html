@@ -46,10 +46,10 @@
       <p>Extend your energy management system with new components and integrations.</p>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-gray-700 p-4 rounded-lg">
-        <h3 class="text-xl font-bold mb-4">Add Components</h3>
-        <form id="componentsForm">
+    <form id="mainForm">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-gray-700 p-4 rounded-lg">
+          <h3 class="text-xl font-bold mb-4">Add Components</h3>
           <div id="componentsContainer">
             <div class="mb-4">
               <label class="block text-white mb-2">Component Type</label>
@@ -75,58 +75,61 @@
             </div>
           </div>
           <button type="button" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate w-full" onclick="addComponent()">Add Another Component</button>
-          <button type="submit" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate w-full mt-4">Submit Components</button>
-        </form>
+        </div>
+        
+        <div class="bg-gray-700 p-4 rounded-lg">
+          <h3 class="text-xl font-bold mb-4">Add Time Table</h3>
+          <div id="timetableContainer">
+            <div class="mb-4">
+              <label class="block text-white mb-2">Classroom</label>
+              <select class="w-full p-2 rounded-lg text-black">
+                <option>Classroom 101</option>
+                <option>Classroom 102</option>
+                <option>Classroom 103</option>
+                <option>Classroom 104</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-white mb-2">Time Slot</label>
+              <input type="text" class="w-full p-2 rounded-lg text-black" placeholder="Enter time slot (e.g., 9:00 AM - 10:00 AM)">
+            </div>
+            <div class="mb-4">
+              <label class="block text-white mb-2">Class</label>
+              <input type="text" class="w-full p-2 rounded-lg text-black" placeholder="Enter class name">
+            </div>
+          </div>
+          <button type="button" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate w-full" onclick="addTimeTable()">Add Another Time Table</button>
+        </div>
+        
+        <div class="bg-gray-700 p-4 rounded-lg">
+          <h3 class="text-xl font-bold mb-4">Input Consumption Data</h3>
+          <div id="consumptionContainer">
+            <div class="mb-4">
+              <label class="block text-white mb-2">Department</label>
+              <select class="w-full p-2 rounded-lg text-black">
+                <option>Admin Building</option>
+                <option>CSE Department</option>
+                <option>Production Department</option>
+                <option>Mechanical Department</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-white mb-2">Date</label>
+              <input type="date" class="w-full p-2 rounded-lg text-black">
+            </div>
+            <div class="mb-4">
+              <label class="block text-white mb-2">Energy Consumption (kWh)</label>
+              <input type="number" class="w-full p-2 rounded-lg text-black" placeholder="Enter energy consumption">
+            </div>
+          </div>
+          <button type="button" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate w-full" onclick="addConsumptionData()">Add Another Consumption Data</button>
+        </div>
       </div>
       
-      <div class="bg-gray-700 p-4 rounded-lg">
-        <h3 class="text-xl font-bold mb-4">Add Time Table</h3>
-        <form>
-          <div class="mb-4">
-            <label class="block text-white mb-2">Classroom</label>
-            <select class="w-full p-2 rounded-lg text-black">
-              <option>Classroom 101</option>
-              <option>Classroom 102</option>
-              <option>Classroom 103</option>
-              <option>Classroom 104</option>
-            </select>
-          </div>
-          <div class="mb-4">
-            <label class="block text-white mb-2">Time Slot</label>
-            <input type="text" class="w-full p-2 rounded-lg text-black" placeholder="Enter time slot (e.g., 9:00 AM - 10:00 AM)">
-          </div>
-          <div class="mb-4">
-            <label class="block text-white mb-2">Class</label>
-            <input type="text" class="w-full p-2 rounded-lg text-black" placeholder="Enter class name">
-          </div>
-          <button type="button" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate w-full">Add Time Table</button>
-        </form>
+      <div class="flex justify-between mt-8">
+        <button type="button" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate" onclick="submitData()">Submit Data</button>
       </div>
-      
-      <div class="bg-gray-700 p-4 rounded-lg">
-        <h3 class="text-xl font-bold mb-4">Input Consumption Data</h3>
-        <form>
-          <div class="mb-4">
-            <label class="block text-white mb-2">Department</label>
-            <select class="w-full p-2 rounded-lg text-black">
-              <option>Admin Building</option>
-              <option>CSE Department</option>
-              <option>Production Department</option>
-              <option>Mechanical Department</option>
-            </select>
-          </div>
-          <div class="mb-4">
-            <label class="block text-white mb-2">Date</label>
-            <input type="date" class="w-full p-2 rounded-lg text-black">
-          </div>
-          <div class="mb-4">
-            <label class="block text-white mb-2">Energy Consumption (kWh)</label>
-            <input type="number" class="w-full p-2 rounded-lg text-black" placeholder="Enter energy consumption">
-          </div>
-          <button type="button" class="bg-white text-gray-700 px-4 py-2 rounded-lg btn-animate w-full">Input Data</button>
-        </form>
-      </div>
-    </div>
+    </form>
     
     <div id="predictionResults" class="mt-8 bg-gray-700 p-4 rounded-lg hidden">
       <h3 class="text-xl font-bold mb-4">Prediction Results</h3>
@@ -168,34 +171,102 @@
       container.insertAdjacentHTML('beforeend', componentHTML);
     }
 
-    function predictEnergyConsumption() {
-      // Call the AI API to get energy consumption predictions
-      // For demonstration, we'll use a placeholder response
-      const predictionResults = `
-        <p>Classroom 101: 120 kWh</p>
-        <p>Classroom 102: 150 kWh</p>
-        <p>Classroom 103: 130 kWh</p>
-        <p>Classroom 104: 140 kWh</p>
-        <p>Peak Hours: 9:00 AM - 11:00 AM</p>
-        <p>Estimated Monthly Consumption: 4500 kWh</p>
+    function addTimeTable() {
+      const container = document.getElementById('timetableContainer');
+      const timetableHTML = `
+        <div class="mb-4">
+          <label class="block text-white mb-2">Classroom</label>
+          <select class="w-full p-2 rounded-lg text-black">
+            <option>Classroom 101</option>
+            <option>Classroom 102</option>
+            <option>Classroom 103</option>
+            <option>Classroom 104</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-white mb-2">Time Slot</label>
+          <input type="text" class="w-full p-2 rounded-lg text-black" placeholder="Enter time slot (e.g., 9:00 AM - 10:00 AM)">
+        </div>
+        <div class="mb-4">
+          <label class="block text-white mb-2">Class</label>
+          <input type="text" class="w-full p-2 rounded-lg text-black" placeholder="Enter class name">
+        </div>
       `;
-      
-      document.getElementById('predictionContent').innerHTML = predictionResults;
-      document.getElementById('predictionResults').classList.remove('hidden');
+      container.insertAdjacentHTML('beforeend', timetableHTML);
     }
 
-    function getSuggestions() {
-      // Call the AI API to get energy-saving suggestions
-      // For demonstration, we'll use a placeholder response
-      const suggestionResults = `
-        <p>1. Replace old lighting with LED lights to save 15% on energy costs.</p>
-        <p>2. Implement automated shutdown for lab equipment after hours.</p>
-        <p>3. Optimize HVAC schedules to reduce energy consumption during unoccupied hours.</p>
-        <p>4. Encourage students and staff to turn off lights and equipment when not in use.</p>
+    function addConsumptionData() {
+      const container = document.getElementById('consumptionContainer');
+      const consumptionHTML = `
+        <div class="mb-4">
+          <label class="block text-white mb-2">Department</label>
+          <select class="w-full p-2 rounded-lg text-black">
+            <option>Admin Building</option>
+            <option>CSE Department</option>
+            <option>Production Department</option>
+            <option>Mechanical Department</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-white mb-2">Date</label>
+          <input type="date" class="w-full p-2 rounded-lg text-black">
+        </div>
+        <div class="mb-4">
+          <label class="block text-white mb-2">Energy Consumption (kWh)</label>
+          <input type="number" class="w-full p-2 rounded-lg text-black" placeholder="Enter energy consumption">
+        </div>
       `;
-      
-      document.getElementById('suggestionContent').innerHTML = suggestionResults;
-      document.getElementById('suggestionResults').classList.remove('hidden');
+      container.insertAdjacentHTML('beforeend', consumptionHTML);
+    }
+
+    function submitData() {
+      const components = [];
+      document.querySelectorAll('#componentsContainer > div').forEach(component => {
+        const type = component.querySelector('select:nth-of-type(1)').value;
+        const location = component.querySelector('select:nth-of-type(2)').value;
+        const description = component.querySelector('textarea').value;
+        components.push({ type, location, description });
+      });
+
+      const timetables = [];
+      document.querySelectorAll('#timetableContainer > div').forEach(timetable => {
+        const classroom = timetable.querySelector('select').value;
+        const timeSlot = timetable.querySelector('input[type="text"]').value;
+        const className = timetable.querySelector('input[type="text"]').value;
+        timetables.push({ classroom, timeSlot, className });
+      });
+
+      const consumptions = [];
+      document.querySelectorAll('#consumptionContainer > div').forEach(consumption => {
+        const department = consumption.querySelector('select').value;
+        const date = consumption.querySelector('input[type="date"]').value;
+        const energyConsumption = consumption.querySelector('input[type="number"]').value;
+        consumptions.push({ department, date, energyConsumption });
+      });
+
+      const data = { components, timetables, consumptions };
+
+      console.log('Submitting data:', data);
+
+      fetch('/submit_data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Submission response:', data);
+        const predictionResults = data.predictions.split('\n').map(prediction => `<p>${prediction}</p>`).join('');
+        document.getElementById('predictionContent').innerHTML = predictionResults;
+        document.getElementById('predictionResults').classList.remove('hidden');
+
+        const suggestionResults = data.suggestions.split('\n').map(suggestion => `<p>${suggestion}</p>`).join('');
+        document.getElementById('suggestionContent').innerHTML = suggestionResults;
+        document.getElementById('suggestionResults').classList.remove('hidden');
+      })
+      .catch(error => console.error('Error:', error));
     }
   </script>
 </body>

@@ -1,4 +1,5 @@
-from flask import Flask, redirect, url_for, session, request, render_template
+import openai
+from flask import Flask, redirect, url_for, session, request, render_template, jsonify
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 import os
@@ -8,6 +9,8 @@ load_dotenv()  # Load environment variables from .env file
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
 app.config['SESSION_TYPE'] = 'filesystem'
+
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 oauth = OAuth(app)
 google = oauth.register(
@@ -53,9 +56,42 @@ def dashboard():
     if user:
         return render_template('index.html', user=user)
     return redirect(url_for('login'))
+
 @app.route('/add_components')
 def add_components():
     return render_template('add_components.html')
+
+@app.route('/submit_data', methods=['POST'])
+def submit_data():
+    data = request.json
+    components = data.get('components', [])
+    timetables = data.get('timetables', [])
+    consumptions = data.get('consumptions', [])
+    
+    # Create a prompt for GPT-3
+    prompt = "Predict the weekly energy consumption and provide suggestions based on the following data:\n\nComponents:\n"
+    for component in components:
+        prompt += f"- {component['type']} in {component['location']}: {component['description']}\n"
+    
+    prompt += "\nTimetables:\n"
+    for timetable in timetables:
+        prompt += f"- {timetable['classroom']} from {timetable['timeSlot']} for {timetable['className']}\n"
+    
+    prompt += "\nConsumptions:\n"
+    for consumption in consumptions:
+        prompt += f"- {consumption['department']} on {consumption['date']}: {consumption['energyConsumption']} kWh\n"
+    
+    print('Prompt:', prompt)
+    
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=prompt,
+        max_tokens=300
+    )
+    
+    predictions = response.choices[0].text.strip()
+    print('Predictions and Suggestions:', predictions)
+    return jsonify({"predictions": predictions, "suggestions": predictions})
 
 if __name__ == '__main__':
     app.run(debug=True)
