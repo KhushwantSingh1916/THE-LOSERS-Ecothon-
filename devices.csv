@@ -1,0 +1,6 @@
+Device_ID,Device_Name,Power_Rating_kW,Location
+1,Light,0.04,BuildingA
+2,Fan,0.075,BuildingA
+3,AC,1.5,BuildingB
+4,Projector,0.3,BuildingC
+5,Computer,0.2,BuildingB

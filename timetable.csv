@@ -1,0 +1,6 @@
+Class_ID,Room,Start_Time,End_Time,Devices_Used
+101,RoomA,09:00,10:00,"Light,Fan"
+102,RoomB,11:00,12:00,"Light,Projector"
+103,RoomA,14:00,15:00,"Light,AC,Fan"
+104,RoomC,10:00,12:00,"Light,Projector,Computer"
+105,RoomB,15:00,17:00,"Light,Computer"

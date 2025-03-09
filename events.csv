@@ -1,0 +1,5 @@
+Event_ID,Event_Name,Location,Start_Time,End_Time,Devices_Used
+201,Seminar,BuildingA,14:00,16:00,"Light,AC,Projector"
+202,Workshop,BuildingB,18:00,20:00,"Light,Projector"
+203,Conference,BuildingC,10:00,16:00,"Light,AC,Projector,Computer"
+204,Meeting,BuildingA,16:00,17:00,"Light,Computer"
