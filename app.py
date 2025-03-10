@@ -10,6 +10,7 @@ import matplotlib
 matplotlib.use('Agg')  # For running without a display
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
+from suggestion_generation import generate_suggestions
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -86,6 +87,25 @@ def dashboard():
 @app.route('/add_components')
 def add_components():
     return render_template('add_components.html')
+
+@app.route('/suggestions', methods=['GET', 'POST'])
+def suggestions():
+    if request.method == 'POST':
+        # Get the building ID from the form
+        building_id = int(request.form['building_id'])
+
+        # Load datasets
+        devices_df, energy_df, timetable_df, event_df, _ = load_data()
+
+        # Generate suggestions
+        if devices_df is not None and energy_df is not None:
+            generated_suggestions = generate_suggestions(building_id, devices_df, energy_df)
+            return render_template('suggestions.html', suggestions=generated_suggestions, building_id=building_id)
+        else:
+            return "Data files not found. Please run the data generation script first."
+
+    # Render the form for GET requests
+    return render_template('suggestions_form.html')
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
