@@ -8,8 +8,20 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
   <style>
+    html, body{
+      height: 100vh;
+      margin: 0;
+    }
     body {
+      background-image: url('/static/Group.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
       font-family: 'Roboto', sans-serif;
+      background-color: rgba(26, 59, 42, 1);
+      height: 100vh;
+      width: 100vw;
+      margin: 0;
       overflow: hidden;
     }
     .btn-animate {
@@ -96,9 +108,10 @@
     }
   </style>
 </head>
-<body class="bg-green-800 text-white flex items-center justify-center h-screen">
+<body class="bg-[rgba(26,59,42,1)] text-white flex items-center justify-center h-screen pl-[280px]">
   <div class="bg-green-600 p-8 rounded-lg floating-card w-full max-w-md">
-    <h1 class="text-3xl font-bold mb-6 text-center">Login</h1>
+    <h1 class="text-3xl font-bold mb-6 text-center"><u>Login</u></h1>
+    <h1 class="text-xl font-bold mb-6 text-center">Green choices begin with a click!</h1>
     <a href="/login/google" class="w-full bg-white text-green-700 px-4 py-2 rounded-lg btn-animate flex items-center justify-center">
       <i class="fab fa-google mr-2"></i> Login with Google
     </a>

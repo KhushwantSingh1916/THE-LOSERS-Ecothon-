@@ -7,8 +7,15 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
   <style>
+
    body {
+    /* background-image: url('/static/firefly1.jpg'); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
      font-family: 'Roboto', sans-serif;
+     overflow-y: hidden;
+     overflow-x: hidden;
    }
    .btn-animate {
      transition: transform 0.2s;
@@ -58,7 +65,7 @@
             border-radius: 64px;
    }
    .floating-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-1px);
             box-shadow: 0 7px 14px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);    
   }
   .truncate {
@@ -66,9 +73,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+  .sidebar {
+    padding-top: 0px;
+      height: 48vh; /* Set the height to half of the viewport height */
+  }
   </style>
  </head>
- <body class="bg-gray-800 text-white">
+ <body class="bg-[#016426] text-[#D3D3D3] p-4 rounded-lg">
+  <!-- <body> -->
   <!-- Modal for graph expansion -->
   <div class="modal" id="graphModal">
     <div class="modal-content">
@@ -91,29 +103,45 @@
     <div id="mainDashboard" class="page">
       <div class="flex flex-col md:flex-row">
         <!-- Sidebar -->
-        <div class="bg-green-700 w-full md:w-20 flex md:flex-col items-center py-4 space-y-4 floating-card">
-          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="navigateTo('homePage')">
+        <div class="bg-green-700 w-full md:w-20 flex md:flex-col items-center py-4 space-y-4 floating-card sidebar">
+          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12 
+                         shadow-lg transform transition-all hover:scale-110 active:scale-95 hover:shadow-2xl" 
+                  onclick="navigateTo('homePage')" title="Home">
             <i class="fas fa-home text-gray-700"></i>
           </button>
-          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="navigateTo('lightbulbPage')">
+        
+          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12 
+                         shadow-lg transform transition-all hover:scale-110 active:scale-95 hover:shadow-2xl" 
+                  onclick="navigateTo('lightbulbPage')" title="Energy Insights">
             <i class="fas fa-lightbulb text-gray-700"></i>
           </button>
-          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="navigateTo('trophyPage')">
+        
+          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12 
+                         shadow-lg transform transition-all hover:scale-110 active:scale-95 hover:shadow-2xl" 
+                  onclick="navigateTo('trophyPage')" title="Leaderboard"> 
             <i class="fas fa-trophy text-gray-700"></i>
           </button>
-          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="navigateTo('gamepadPage')">
-            <i class="fas fa-gamepad text-gray-700"></i>
+        
+          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12 
+                         shadow-lg transform transition-all hover:scale-110 active:scale-95 hover:shadow-2xl" 
+                  onclick="navigateTo('gamepadPage')" title="Energy Control">
+            <i class="fas fa-sliders-h text-gray-700"></i>
           </button>
-          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="window.location.href='/add_components'">
-            <i class="fas fa-plus text-gray-700"></i>
+        
+          <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12 
+                         shadow-lg transform transition-all hover:scale-110 active:scale-95 hover:shadow-2xl" 
+                  onclick="window.location.href='/add_components'" title="View Predictions">
+            <i class="fas fa-chart-line text-gray-700"></i>
           </button>
         </div>
+        
         <!-- Main Content -->
         <div class="flex-1 p-4">
           <!-- Header -->
           <!-- filepath: c:\Users\khush\OneDrive\ecothon\THE-LOSERS-Ecothon-\templates\index.html -->
-<div class="flex justify-between items-center bg-green-700 p-4 rounded-lg floating-card">
-  <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+          <div class="flex justify-between items-center bg-green-700 p-4 rounded-2xl floating-card">
+
+  <h1 class="text-2xl font-bold">ADMIN DASHBOARD</h1>
   <div class="flex items-center space-x-4">
     <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12" onclick="">
       <i class="fas fa-microphone text-gray-700"></i>
@@ -212,7 +240,6 @@
               <h3 class="text-xl font-bold mb-2">Quick Access</h3>
               <ul class="space-y-2">
                 <li><a href="#" class="text-white hover:underline">⚡ Energy Overview</a></li>
-                <li><a href="#" class="text-white hover:underline">📊 Analytics Dashboard</a></li>
                 <li><a href="#" class="text-white hover:underline">⚙️ System Settings</a></li>
                 <li><a href="#" class="text-white hover:underline">📋 Reports Generator</a></li>
               </ul>
