@@ -1,49 +1,68 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Energy Consumption Prediction</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
     <style>
-        body { padding-top: 50px; }
-        .starter-template { padding: 40px 15px; }
+        body { 
+            font-family: 'Roboto', sans-serif;
+            background-color: #016426;
+            color: #D3D3D3;
+        }
+        .floating-card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease-in-out;
+            border-radius: 24px;
+        }
+        .floating-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 7px 14px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);    
+        }
+        .btn-animate {
+            transition: transform 0.2s;
+        }
+        .btn-animate:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="/">Energy Predictor</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/predict">Predict</a></li>
-                <li class="nav-item"><a class="nav-link" href="/visualize">Visualize</a></li>
-                <li class="nav-item"><a class="nav-link" href="/suggestions">Suggestions</a></li>
-            </ul>
+<body class="p-4">
+    <nav class="bg-green-700 p-4 rounded-lg floating-card mb-6">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Energy Management System</h1>
+            <div class="flex items-center space-x-4">
+                <a href="/" class="bg-white text-green-700 px-4 py-2 rounded-lg btn-animate">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+                </a>
+            </div>
         </div>
     </nav>
 
-    <main role="main" class="container">
-        <div class="starter-template">
-            <h1>Energy Consumption Prediction & Optimization</h1>
-            <p class="lead">A machine learning-based system for predicting and optimizing energy consumption in educational buildings.</p>
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Make Predictions</h5>
-                            <p class="card-text">Predict energy consumption based on building characteristics and conditions.</p>
-                            <a href="/predict" class="btn btn-primary">Predict Energy</a>
-                        </div>
-                    </div>
+    <main role="main" class="container mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Make Predictions Card -->
+            <div class="bg-green-700 p-6 rounded-lg floating-card">
+                <div class="text-center mb-4">
+                    <i class="fas fa-chart-line text-4xl mb-3"></i>
+                    <h5 class="text-xl font-bold">Make Predictions</h5>
+                    <p class="text-gray-300 mb-4">Predict energy consumption based on building characteristics and conditions.</p>
+                    <a href="/predict" class="inline-block bg-white text-green-700 px-6 py-3 rounded-lg btn-animate">
+                        <i class="fas fa-chart-line mr-2"></i>Predict Energy
+                    </a>
                 </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Visualize Data</h5>
-                            <p class="card-text">View energy consumption patterns and insights from the data.</p>
-                            <a href="/visualize" class="btn btn-success">View Visualizations</a>
-                        </div>
-                    </div>
+            </div>
+
+            <!-- Visualize Data Card -->
+            <div class="bg-green-700 p-6 rounded-lg floating-card">
+                <div class="text-center mb-4">
+                    <i class="fas fa-chart-bar text-4xl mb-3"></i>
+                    <h5 class="text-xl font-bold">Visualize Data</h5>
+                    <p class="text-gray-300 mb-4">View energy consumption patterns and insights from the data.</p>
+                    <a href="/visualize" class="inline-block bg-white text-green-700 px-6 py-3 rounded-lg btn-animate">
+                        <i class="fas fa-eye mr-2"></i>View Visualizations
+                    </a>
                 </div>
             </div>
         </div>
