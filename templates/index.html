@@ -10,12 +10,23 @@
 
    body {
     /* background-image: url('/static/firefly1.jpg'); */
+    background-image: url('/static/background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-     font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
     /* overflow-y: hidden;
      overflow-x: hidden;*/
+   }
+   .main-container {
+     padding: 0;
+     min-height: 100vh;
+   }
+   .content-area {
+     padding: 1rem;
    }
    .btn-animate {
      transition: transform 0.2s;
@@ -60,9 +71,16 @@
      display: block;
    }
    .floating-card {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: transform 0.3s ease-in-out;
-            border-radius: 64px;
+    background: linear-gradient(
+            135deg, 
+            rgba(4, 120, 87, 0.6) 0%, 
+            rgba(5, 150, 105, 0.4) 100%
+        );
+        backdrop-filter: blur(8px);
+        border: 3px solid rgba(30, 28, 28, 0.1);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: transform 0.3s ease-in-out;
+        border-radius: 24px;
    }
    .floating-card:hover {
             transform: translateY(-7px);
@@ -75,11 +93,12 @@
 }
   .sidebar {
     padding-top: 0px;
+    margin-right: 15px;
       height: 48vh; /* Set the height to half of the viewport height */
   }
   </style>
  </head>
- <body class="bg-[#016426] text-[#D3D3D3] p-4 rounded-lg">
+ <body class="text-[#D3D3D3] ">
   <!-- <body> -->
   <!-- Modal for graph expansion -->
   <div class="modal" id="graphModal">
@@ -98,12 +117,12 @@
   </div>
 
   <!-- Pages Container -->
-  <div id="pagesContainer">
+  <div id="pagesContainer" class="main-container">
     <!-- Main Dashboard Page -->
     <div id="mainDashboard" class="page">
       <div class="flex flex-col md:flex-row">
         <!-- Sidebar -->
-        <div class="bg-green-700 w-full md:w-20 flex md:flex-col items-center py-4 space-y-4 floating-card sidebar">
+        <div class="mx-3 w-full md:w-20 flex md:flex-col items-center py-6 space-y-4 floating-card sidebar">
           <button class="bg-white rounded-full p-3 btn-animate flex items-center justify-center w-12 h-12 
                          shadow-lg transform transition-all hover:scale-110 active:scale-95 hover:shadow-2xl" 
                   onclick="navigateTo('homePage')" title="Home">
@@ -136,10 +155,10 @@
         </div>
         
         <!-- Main Content -->
-        <div class="flex-1 p-4">
+        <div class="flex-1">
           <!-- Header -->
           <!-- filepath: c:\Users\khush\OneDrive\ecothon\THE-LOSERS-Ecothon-\templates\index.html -->
-          <div class="flex justify-between items-center bg-green-700 p-4 rounded-2xl floating-card">
+          <div class="flex justify-between items-center p-4 rounded-2xl floating-card">
 
   <h1 class="text-2xl font-bold">ADMIN DASHBOARD</h1>
   <div class="flex items-center space-x-4">
@@ -158,7 +177,7 @@
           <!-- Content Grid -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
             <!-- Sectorwise Consumption -->
-            <div class="bg-green-700 p-4 rounded-lg floating-card">
+            <div class=" p-4 rounded-lg floating-card">
               <h2 class="text-xl font-bold mb-4 text-center">Sectorwise Consumption</h2>
               <input class="w-full p-2 mb-4 rounded-lg text-black " placeholder="search" type="text"/>
               <div class="space-y-2">
@@ -177,7 +196,7 @@
               </div>
             </div>
             <!-- Reports -->
-            <div class="bg-green-700 p-4 rounded-lg col-span-1 md:col-span-2 floating-card">
+            <div class=" p-4 rounded-lg col-span-1 md:col-span-2 floating-card">
               <h2 class="text-xl font-bold mb-4 text-center">Reports</h2>
               <div class="flex flex-col md:flex-row justify-around space-y-4 md:space-y-0">
                 <div class="bg-gray-700 p-4 rounded-lg flex-1 mx-2 floating-card">
@@ -195,21 +214,21 @@
               </div>
             </div>
             <!-- Power Saved -->
-            <div class="bg-green-700 p-4 rounded-lg floating-card">
+            <div class=" p-4 rounded-lg floating-card">
               <h2 class="text-xl font-bold mb-4 text-center">Power Saved</h2>
               <div class="flex justify-center">
                 <img alt="Power saved chart" class="rounded-lg img-hover" height="150" src="https://storage.googleapis.com/a1aa/image/URGdlP7uP-1lhITHHtFKicNImLw7p_krvRHwsU8wsp4.jpg" width="200" onclick="showGraphModal('Power Saved Analysis', 'https://storage.googleapis.com/a1aa/image/URGdlP7uP-1lhITHHtFKicNImLw7p_krvRHwsU8wsp4.jpg', 'Power savings analysis shows impressive results from our efficiency initiatives:<br><br>- Total power saved this year: 42,500 kWh<br>- Equivalent to $5,100 in cost reduction<br>- Carbon footprint reduction: 30 metric tons<br>- Automated lighting controls contributed to 35% of total savings<br>- HVAC optimization responsible for 45% of savings<br>- Equipment upgrades account for 20% of savings')"/>
               </div>
             </div>
             <!-- Total Consumption -->
-            <div class="bg-green-700 p-4 rounded-lg floating-card">
+            <div class=" p-4 rounded-lg floating-card">
               <h2 class="text-xl font-bold mb-4 text-center">Total Consumption</h2>
               <div class="flex justify-center">
                 <img alt="Total consumption chart" class="rounded-lg img-hover" height="150" src="https://storage.googleapis.com/a1aa/image/DVEX-My6UzCxFXYfW6bE4YQwOT0GxELlw9suXlbp2yo.jpg" width="200" onclick="showGraphModal('Total Consumption Overview', 'https://storage.googleapis.com/a1aa/image/DVEX-My6UzCxFXYfW6bE4YQwOT0GxELlw9suXlbp2yo.jpg', 'Total consumption overview provides insights into energy usage patterns:<br><br>- Year-to-date consumption: 145,750 kWh<br>- Average monthly consumption: 12,145 kWh<br>- Projected annual consumption: 174,900 kWh<br>- 8.5% reduction compared to previous year<br>- Peak consumption period: Mid-July through August<br>- Lowest consumption period: December through February')"/>
               </div>
             </div>
             <!-- Event Consumption -->
-            <div class="bg-green-700 p-4 rounded-lg floating-card">
+            <div class="p-4 rounded-lg floating-card">
               <h2 class="text-xl font-bold mb-4 text-center">Event Consumption</h2>
               <div class="flex justify-center">
                 <img alt="Event consumption chart" class="rounded-lg img-hover" height="150" src="https://storage.googleapis.com/a1aa/image/cM7O8-bmbtgIhhv-oy0XYvLC-AF72DQ1tXP6zxoLUmY.jpg" width="200" onclick="showGraphModal('Event Energy Consumption', 'https://storage.googleapis.com/a1aa/image/cM7O8-bmbtgIhhv-oy0XYvLC-AF72DQ1tXP6zxoLUmY.jpg', 'Event energy consumption tracks usage during special campus events:<br><br>- Average event consumption: 320 kWh per event<br>- Highest consumption event: Annual Tech Fair (780 kWh)<br>- Lowest consumption event: Environmental Summit (210 kWh)<br>- Implementation of energy-efficient event guidelines resulted in 22% reduction compared to previous year<br>- Evening events consume 35% more energy than daytime events')"/>
