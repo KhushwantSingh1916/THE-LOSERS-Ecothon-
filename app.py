@@ -7,12 +7,12 @@ import pandas as pd
 import numpy as np
 import pickle
 import matplotlib
-matplotlib.use('Agg')  # For running without a display
+matplotlib.use('Agg') 
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 from suggestion_generation import generate_suggestions
 
-load_dotenv()  # Load environment variables from .env file
+load_dotenv()  
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
@@ -50,14 +50,15 @@ def load_data():
     suggestions_df = pd.read_csv('energy_saving_suggestions.csv') if os.path.exists('energy_saving_suggestions.csv') else None
     return devices_df, energy_df, timetable_df, event_df, suggestions_df
 
+@app.route('/login')
+def login():
+    user = session.get('user')
+    return render_template('login.html')
+
 @app.route('/')
 def index():
     user = session.get('user')
     return render_template('index.html', user=user)
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
 
 @app.route('/login/google')
 def login_google():

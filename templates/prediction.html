@@ -5,6 +5,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { 
             font-family: 'Roboto', sans-serif;
@@ -62,15 +63,89 @@
             <h1 class="text-2xl font-bold mb-2 text-center">Prediction Results</h1>
             <p class="text-gray-300 mb-6 text-center">Energy consumption prediction for Building {{ building_id }}</p>
 
+            <!-- Week Forecast -->
             <div class="bg-gray-700 p-6 rounded-lg mb-6 floating-card">
-                <h2 class="text-xl font-bold mb-4 text-center">Predicted Energy Consumption</h2>
-                <div class="text-center">
-                    <span class="text-5xl font-bold text-white">{{ prediction }}</span>
-                    <span class="text-2xl text-gray-300 ml-2">kWh</span>
-                    <p class="text-gray-400 mt-2">Predicted daily energy consumption</p>
+                <h2 class="text-xl font-bold mb-4 text-center">7-Day Forecast</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4">
+                    {% for forecast in forecasts %}
+                    <div class="bg-green-600 p-4 rounded-lg text-center floating-card">
+                        <p class="text-sm mb-2">{{ forecast.date }}</p>
+                        <p class="text-2xl font-bold">{{ forecast.prediction }} kWh</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Forecast Chart -->
+                <div class="mt-8">
+                    <canvas id="forecastChart" class="w-full h-64"></canvas>
                 </div>
             </div>
+
+            <!-- Energy Saving Suggestions -->
+            {% if suggestions %}
+            <div class="bg-gray-700 p-6 rounded-lg floating-card">
+                <h2 class="text-xl font-bold mb-4 text-center">Energy Saving Suggestions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {% for suggestion in suggestions %}
+                    <div class="bg-green-600 p-4 rounded-lg floating-card">
+                        <p class="font-bold mb-2">{{ suggestion.Suggestion }}</p>
+                        <p class="text-sm">Potential Savings: {{ suggestion.Potential_Savings_kWh }} kWh</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
         </div>
     </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('forecastChart').getContext('2d');
+            const forecastData = JSON.parse('{{ forecasts|tojson|safe }}');
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: forecastData.map(f => f.date),
+                    datasets: [{
+                        label: 'Predicted Energy Consumption (kWh)',
+                        data: forecastData.map(f => f.prediction),
+                        borderColor: 'rgb(74, 222, 128)',
+                        tension: 0.4,
+                        fill: true,
+                        backgroundColor: 'rgba(74, 222, 128, 0.1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#fff'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#fff'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
